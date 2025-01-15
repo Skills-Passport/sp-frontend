@@ -23,8 +23,15 @@ export function TimeLineContentCard({ content }: { content: EndorsementType | Fe
             </div>
 
             {/* User name or "you" */}
-            <span className="font-semibold">{getYouOrFullName(content.created_by, t, user)} ({content.created_by?.role.name})</span>
-
+            {!content.created_by && content.created_by_email ? (
+                <span className="font-semibold">{content.created_by_email}</span>
+                ) : (
+                content.created_by && (
+                    <span className="font-semibold">
+                    {getYouOrFullName(content.created_by, t, user)} ({content.created_by.role?.name || "No role"})
+                    </span>
+                )
+                )}
             {/* Content */}
             <div>
                 {"rating" in content && <>

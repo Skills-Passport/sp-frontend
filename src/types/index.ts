@@ -84,6 +84,7 @@ export type EndorsementType = {
     approved_by: UserType
   }
   created_by: UserType
+  created_by_email?: string
   created_at: Date
 }
 

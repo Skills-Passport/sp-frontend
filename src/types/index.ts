@@ -70,6 +70,7 @@ export type FeedbackType = {
   created_at: Date
   title: string
   content: string
+  created_by_email?: string
 }
 
 export type EndorsementType = {

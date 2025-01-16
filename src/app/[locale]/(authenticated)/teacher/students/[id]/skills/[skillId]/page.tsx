@@ -47,7 +47,7 @@ const StudentSkillDetail = async (props: { params: Promise<{ id: string, skillId
             {/* Title */}
             <PageTitle className="mb-2">{skill.title}</PageTitle>
             {/* Description */}
-            <p>{skill?.desc}</p>
+            {skill.desc && <div className="prose" dangerouslySetInnerHTML={{ __html: skill.desc }}></div>}
         </div>
 
         {/* Rating */}

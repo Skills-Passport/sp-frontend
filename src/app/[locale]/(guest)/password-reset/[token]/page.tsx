@@ -1,31 +1,30 @@
 "use client"
-import { handleBackendFormErrors } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import ApplicationLogo from "@/components/ApplicationLogo";
+import AuthCard from "@/components/AuthCard";
+import SubmitFormButton from "@/components/SubmitFormButton";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { postData } from "@/lib/actions/data.action";
-import toast from "react-hot-toast";
 import { Link, useRouter } from "@/i18n/routing";
-import { useSearchParams } from "next/navigation";
+import { postData } from "@/lib/actions/data.action";
 import { ResetPasswordRequest } from "@/schemas/zod";
-import AuthCard from "@/components/AuthCard";
-import ApplicationLogo from "@/components/ApplicationLogo";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
-import SubmitFormButton from "@/components/SubmitFormButton";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
 
 interface ResetPasswordFormProps {
   token: string;
 }
 
-const PasswordResetPage = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const PasswordResetPage = (props: { params: Promise<{ token: string }> }) => {
+  const params = props.params;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const t = useTranslations("general")
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,34 +37,28 @@ const PasswordResetPage = () => {
     },
   });
 
+  const { formState: { isSubmitting } } = form
+
   const onSubmit = async (values: z.infer<typeof ResetPasswordRequest>) => {
-    setIsSubmitting(true);
-
-    const dataToSend = {
-      ...values,
-      token: searchParams.get("token"),
-    }
-
-    const response = await postData({
-      url: "/reset-password",
-      data: dataToSend,
-      path: "/login",
-    });
-
-    setIsSubmitting(false);
-
-    if (response && !response.success) {
-      handleBackendFormErrors({
-        setError: form.setError,
-        error: response.error,
-        toast(options) { },
+    const { token } = await params
+    try {
+      const res = await postData({
+        url: "/reset-password",
+        data: {
+          ...values,
+          token,
+        },
+        path: "/login",
       });
-      return;
+
+      if (res && res.success) {
+        toast.success("Password reset successfully");
+        router.push("/login");
+      }
     }
-
-    router.push("/login");
-
-    toast.success("Password reset successfully");
+    catch (error) {
+      toast.error(t("genericError"))
+    }
   };
 
   const togglePasswordVisibility = () => {

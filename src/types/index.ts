@@ -70,6 +70,7 @@ export type FeedbackType = {
   created_at: Date
   title: string
   content: string
+  created_by_email?: string
 }
 
 export type EndorsementType = {
@@ -84,6 +85,7 @@ export type EndorsementType = {
     approved_by: UserType
   }
   created_by: UserType
+  created_by_email?: string
   created_at: Date
 }
 

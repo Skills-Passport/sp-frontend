@@ -24,10 +24,10 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
     const form = useForm<EndorsementFormValues>({
         resolver: zodResolver(endorsementSchema),
         defaultValues: {
-            requestTitle: endorsementRequest.title || "",
-            supervisorName: "",
-            supervisorPosition: "",
-            supervisorCompany: "",
+            title: endorsementRequest.title || "",
+            supervisor_name: "",
+            supervisor_position: "",
+            supervisor_company: "",
             rating: 0,
             feedback: "",
         },
@@ -38,12 +38,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
     const onSubmit = async (values: z.infer<typeof endorsementSchema>) => {
         try {
             const res = axiosInstance.post(`/api/endorsements/request/${endorsementRequest.id}`, {
-                title: values.requestTitle,
-                supervisor_company: values.supervisorCompany,
-                supervisor_name: values.supervisorName,
-                supervisor_position: values.supervisorPosition,
-                rating: values.rating,
-                feedback: values.feedback,
+                ...values
             })
             await triggerPromiseToast(res, t)
             push("/endorsement-request/confirmation/")
@@ -59,7 +54,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
                 <SetCookies />
                 <FormField
                     control={form.control}
-                    name="requestTitle"
+                    name="title"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>{t("endorsementTitle")}</FormLabel>
@@ -72,7 +67,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
                 />
                 <FormField
                     control={form.control}
-                    name="supervisorName"
+                    name="supervisor_name"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>{t("endorsementRequest.yourName")}</FormLabel>
@@ -85,7 +80,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
                 />
                 <FormField
                     control={form.control}
-                    name="supervisorPosition"
+                    name="supervisor_position"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>{t("endorsementRequest.yourPosition")}</FormLabel>
@@ -98,7 +93,7 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
                 />
                 <FormField
                     control={form.control}
-                    name="supervisorCompany"
+                    name="supervisor_company"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>{t("endorsementRequest.yourCompany")}</FormLabel>

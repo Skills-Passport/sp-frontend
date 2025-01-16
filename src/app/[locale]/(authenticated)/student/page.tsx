@@ -35,7 +35,7 @@ const DashboardPage = async () => {
       <SectionTitle information={t("general.definitions.competencies")} numberOfItems={competencies?.length}>{t("general.competencies")}</SectionTitle>
 
       <div className="grid sm:grid-cols-2 md:flex md:flex-row gap-2 w-full mb-2">
-        {competencies?.slice(0, 3).map((competency) => <CompetencyCard key={competency.id} competency={competency} />)}
+        {competencies && competencies?.slice(0, 3).map((competency) => <CompetencyCard key={competency.id} competency={competency} />)}
       </div>
 
       {/* View all competencies button */}
@@ -54,7 +54,7 @@ const DashboardPage = async () => {
     <div>
       <SectionTitle information={t("general.definitions.profiles")}> {t("general.profiles")}</SectionTitle >
       <div className="grid grid-cols-2 md:flex gap-2 ">
-        {profiles?.map((profile) => <ProfileTile key={profile.id} profile={profile} />)}
+        {profiles && profiles?.map((profile) => <ProfileTile key={profile.id} profile={profile} />)}
       </div>
     </div>
 
@@ -62,7 +62,7 @@ const DashboardPage = async () => {
     <div>
       <SectionTitle numberOfItems={groups?.length}>{t("general.enrolledGroups")}</SectionTitle>
       <div className="flex gap-3 overflow-x-auto no-scrollbar ">
-        {groups?.map((group) => <GroupCard className="w-80" key={group.id} group={group} />)}
+        {groups && groups?.map((group) => <GroupCard className="w-80" key={group.id} group={group} />)}
       </div>
     </div>
 

@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import SetCookies from "../SetCookies";
+import { feedback } from "@/lib/fakeData";
 
 export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequest: EndorsementRequestType }) => {
     const t = useTranslations("modals")
@@ -37,7 +38,12 @@ export const EndorsementRequestForm = ({ endorsementRequest }: { endorsementRequ
     const onSubmit = async (values: z.infer<typeof endorsementSchema>) => {
         try {
             const res = axiosInstance.post(`/api/endorsements/request/${endorsementRequest.id}`, {
-                ...values,
+                title: values.requestTitle,
+                supervisor_company: values.supervisorCompany,
+                supervisor_name: values.supervisorName,
+                supervisor_position: values.supervisorPosition,
+                rating: values.rating,
+                feedback: values.feedback,
             })
             await triggerPromiseToast(res, t)
             push("/endorsement-request/confirmation/")

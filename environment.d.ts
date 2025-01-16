@@ -7,7 +7,6 @@ declare global {
             JWT_SECRET: string
             NEXT_PUBLIC_SENTRY_DSN: string;
             SENTRY_AUTH_TOKEN: string
-            TINYMCE_API_KEY: string
         }
     }
 }

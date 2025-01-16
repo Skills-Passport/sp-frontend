@@ -87,8 +87,8 @@ const ReviewEndorsementModal = ({ children, request, parentMutate }: { children:
                             <FormLabel>{t("modals.reviewEndorsement.writerOfEndorsement")}</FormLabel>
                             <Alert className="flex justify-between items-center">
                                 <div>
-                                    <span className="font-medium">{request.requestee?.supervisorName}</span>
-                                    <p>{t("modals.reviewEndorsement.positionAtCompany", { position: request.requestee?.supervisorPosition, company: request.requestee?.supervisorCompany })} </p>
+                                    <span className="font-medium">{request.requestee?.supervisor_name}</span>
+                                    <p>{t("modals.reviewEndorsement.positionAtCompany", { position: request.requestee?.supervisor_position, company: request.requestee?.supervisor_company })} </p>
                                 </div>
                                 <div>
                                     {request.requestee_email}

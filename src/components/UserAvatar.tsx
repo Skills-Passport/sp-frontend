@@ -10,7 +10,7 @@ export default function UserAvatar({ user }: { user: UserType }) {
     .join("")
 
   // For now we dont use the user image because the user cant upload an image yet.
-  const userImageUrl = user.image || "/user_image_placeholder.png"
+  const userImageUrl = user?.image || "/user_image_placeholder.png"
 
   // Colors
   const colors = [
